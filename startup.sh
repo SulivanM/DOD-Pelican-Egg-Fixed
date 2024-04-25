@@ -10,4 +10,4 @@ apt update && apt install -y wget
 echo "-------------------------------------------------------------------------------------------------"
 echo "Starting POT Server"
 echo "-------------------------------------------------------------------------------------------------"
-./DOD/Binaries/Linux/DragonsServer-Linux-Shipping -log -SteamServerName=$SRV_NAME -Port=$SERVER_PORT -QueryPort=$QUERY_PORT
+./DOD/DragonsServer.sh -log -SteamServerName=$SRV_NAME -Port=$SERVER_PORT -QueryPort=$QUERY_PORT
