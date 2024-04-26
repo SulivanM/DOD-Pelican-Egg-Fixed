@@ -1,0 +1,94 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-04-26T03:02:04+02:00",
+    "name": "Day Of Dragons",
+    "author": "contact@star-x.fr",
+    "description": null,
+    "features": [
+        "steam_disk_space"
+    ],
+    "docker_images": {
+        "ghcr.io\/parkervcp\/steamcmd:debian": "ghcr.io\/parkervcp\/steamcmd:debian"
+    },
+    "file_denylist": [],
+    "startup": "\/bin\/bash \/home\/container\/startup.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\necho \"Day Of Dragons Egg Star-X\"\r\necho \"(c) Copyright 2024 - SwitchCompagnie\"\r\n# Installation des utilitaires n\u00e9cessaires\r\necho \"Installing Utils\"\r\napt update && apt install -y wget lib32gcc1\r\n\r\n# D\u00e9placer vers le r\u00e9pertoire du serveur\r\ncd \/mnt\/server || exit\r\n\r\n# V\u00e9rification et cr\u00e9ation du r\u00e9pertoire du serveur si n\u00e9cessaire\r\nconfig_dir=\"\/mnt\/server\/Dragons\/Saved\/Config\/LinuxServer\"\r\nmkdir -p \"$config_dir\"\r\n\r\n# Steam Params Install\r\nSRCDS_APPID=1088320\r\nif [ \"${STEAM_USER}\" == \"\" ]; then\r\n    echo -e \"Steam user is not set.\\n\"\r\n    echo -e \"Using anonymous user.\\n\"\r\n    STEAM_USER=anonymous\r\n    STEAM_PASS=\"\"\r\n    STEAM_AUTH=\"\"\r\nelse\r\n    echo -e \"User set to ${STEAM_USER}\"\r\nfi\r\n\r\n# T\u00e9l\u00e9chargement et rendu ex\u00e9cutable SteamCMD\r\necho \"Downloading SteamCMD\"\r\nwget -O steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\nchmod +x steamcmd.tar.gz\r\nmkdir -p \/mnt\/server\/steamcmd\r\ntar -xzvf steamcmd.tar.gz -C \/mnt\/server\/steamcmd\r\nmkdir -p \/mnt\/server\/steamapps\r\n\r\n# T\u00e9l\u00e9chargement des fichiers de d\u00e9marrage et de configuration par d\u00e9faut depuis GitHub\r\necho \"Downloading startup script and default config files from Github\"\r\nwget -O \"$config_dir\/Game.ini\" https:\/\/raw.githubusercontent.com\/SulivanM\/DOD-Pelican-Egg-Fixed\/main\/Game.ini\r\nwget -O \"\/mnt\/server\/startup.sh\" https:\/\/raw.githubusercontent.com\/SulivanM\/DOD-Pelican-Egg-Fixed\/main\/startup.sh\r\n\r\n# Installation Du Jeu Via SteamCMD\r\necho \"Downloading Game With SteamCMD\"\r\ncd \/mnt\/server\/steamcmd\r\n.\/steamcmd.sh +force_install_dir \/mnt\/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} +app_update ${SRCDS_APPID} ${EXTRA_FLAGS} validate +quit\r\n\r\n# Mise En Place Library 32 Bit\r\nmkdir -p \/mnt\/server\/.steam\/sdk32\r\ncp -v linux32\/steamclient.so ..\/.steam\/sdk32\/steamclient.so\r\n\r\n# Mise En Place Library 64 Bit\r\nmkdir -p \/mnt\/server\/.steam\/sdk64\r\ncp -v linux64\/steamclient.so ..\/.steam\/sdk64\/steamclient.so\r\n\r\necho \"Install Finished !\"",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server Name",
+            "description": "The option is for put server name.",
+            "env_variable": "SERVER_NAME",
+            "default_value": "DOD_Test",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Query Port",
+            "description": "Server option query port.",
+            "env_variable": "QUERY_PORT",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer|between:1024,65536",
+            "field_type": "text"
+        },
+        {
+            "name": "MOTD",
+            "description": "Enter your message here which will display to players on the character select screen and be sure to include the quotes.",
+            "env_variable": "MOTD",
+            "default_value": "DOD_Test_MOTD",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Type",
+            "description": "The option for server type.",
+            "env_variable": "SERVER_TYPE",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:10",
+            "field_type": "text"
+        },
+        {
+            "name": "Max Player",
+            "description": "The option for set max player to the server.",
+            "env_variable": "MAX_PLAYER",
+            "default_value": "100",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:100",
+            "field_type": "text"
+        },
+        {
+            "name": "MAP",
+            "description": "The game map for server.",
+            "env_variable": "MAP",
+            "default_value": "SV_Forest",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:60",
+            "field_type": "text"
+        }
+    ]
+}
