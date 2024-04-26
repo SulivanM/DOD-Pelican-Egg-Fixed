@@ -5,4 +5,4 @@ echo "(c) Copyright 2024 - SwitchCompagnie"
 echo "-------------------------------------------------------------------------------------------------"
 echo "Starting DOD Server & Checking Updates"
 echo "-------------------------------------------------------------------------------------------------"
-./DragonsServer.sh -log -SteamServerName=$SRV_NAME -Port=$SERVER_PORT -QueryPort=$QUERY_PORT
+./DragonsServer.sh -log -iServerType=$SERVER_TYPE -SteamServerName=$SRV_NAME -sServerMOTD=$MOTD -iMaxPlayers=$MAX_PLAYER -sMap=$MAP -Port=$SERVER_PORT -QueryPort=$QUERY_PORT
