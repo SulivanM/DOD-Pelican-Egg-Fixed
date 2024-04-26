@@ -49,46 +49,6 @@
             "user_editable": true,
             "rules": "required|integer|between:1024,65536",
             "field_type": "text"
-        },
-        {
-            "name": "MOTD",
-            "description": "Enter your message here which will display to players on the character select screen and be sure to include the quotes.",
-            "env_variable": "MOTD",
-            "default_value": "DOD_Test_MOTD",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string|max:100",
-            "field_type": "text"
-        },
-        {
-            "name": "Server Type",
-            "description": "The option for server type.",
-            "env_variable": "SERVER_TYPE",
-            "default_value": "0",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string|max:10",
-            "field_type": "text"
-        },
-        {
-            "name": "Max Player",
-            "description": "The option for set max player to the server.",
-            "env_variable": "MAX_PLAYER",
-            "default_value": "100",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string|max:100",
-            "field_type": "text"
-        },
-        {
-            "name": "MAP",
-            "description": "The game map for server.",
-            "env_variable": "MAP",
-            "default_value": "SV_Forest",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|string|max:60",
-            "field_type": "text"
         }
     ]
 }
